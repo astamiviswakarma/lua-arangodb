@@ -16,7 +16,7 @@ local dkjson = require "dkjson"
 local basexx = require "basexx"
 
 -- model import
-local swagger_auth_api = require "swagger.api.auth_api"
+-- local swagger_auth_api = require "swagger.api.auth_api"
 
 local swagger= {}
 local swagger_mt = {
@@ -42,16 +42,18 @@ local function new_auth_api(host, basePath, schemes)
 	}, swagger_mt)
 end
 
-function auth_api:api_edges_collection_id_get(collection_id, vertex, direction)
+function auth_api:api_database_open_auth_post(json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
-		path = string.format("%s/_api/edges/%s?vertex=%s&direction=%s",
-			self.basePath, collection_id, http_util.encodeURIComponent(vertex), http_util.encodeURIComponent(direction));
+		path = string.format("%s/_db/_system/_open/auth",
+			self.basePath);
 	})
 
 	-- set HTTP verb
-	req.headers:upsert(":method", "GET")
+	req.headers:upsert(":method", "POST")
+	req:set_body(dkjson.encode(json_request_body))
+
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go()
@@ -71,4 +73,3 @@ function auth_api:api_edges_collection_id_get(collection_id, vertex, direction)
 		return nil, http_status, body
 	end
 end
-
