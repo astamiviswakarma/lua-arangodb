@@ -1,4 +1,4 @@
-package = "luaarangodb"
+package = "lua-arangodb"
 version = "0.0.1-1"
 
 source = {
@@ -82,6 +82,7 @@ build = {
         ["arango.model.jsf_post_api_aqlfunction"] = "src/model/jsf_post_api_aqlfunction.lua",
         ["arango.model.jsf_post_api_collection"] = "src/model/jsf_post_api_collection.lua",
         ["arango.model.jsf_post_api_collection_opts"] = "src/model/jsf_post_api_collection_opts.lua",
+        ["arango.model.jsf_post_api_database_open_auth"] = "src/model/jsf_post_api_database_open_auth.lua",
         ["arango.model.jsf_post_api_cursor"] = "src/model/jsf_post_api_cursor.lua",
         ["arango.model.jsf_post_api_cursor_opts"] = "src/model/jsf_post_api_cursor_opts.lua",
         ["arango.model.jsf_post_api_cursor_rc_201"] = "src/model/jsf_post_api_cursor_rc_201.lua",
