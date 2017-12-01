@@ -16,15 +16,15 @@ local dkjson = require "dkjson"
 local basexx = require "basexx"
 
 -- model import
-local swagger_wal_api = require "swagger.api.wal_api"
+-- local swagger_wal_api = require "swagger.api.wal_api"
 
-local swagger= {}
+local wal_api= {}
 local swagger_mt = {
 	__name = "wal_api";
-	__index = swagger;
+	__index = wal_api;
 }
 
-local function new_wal_api(host, basePath, schemes)
+local function new_wal_api(host, port, basePath, schemes)
 	local schemes_map = {}
 	for _,v in ipairs(schemes) do
 		schemes_map[v] = v
@@ -32,6 +32,7 @@ local function new_wal_api(host, basePath, schemes)
 	local default_scheme = schemes_map.https or schemes_map.http
 	return setmetatable({
 		host = host;
+		port = port;
 		basePath = basePath or "http://localhost/_db/_system";
 		schemes = schemes_map;
 		default_scheme = default_scheme;
@@ -46,6 +47,7 @@ function wal_api:admin_wal_flush_put(wait_for_sync, wait_for_collector)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_admin/wal/flush?waitForSync=%s&waitForCollector=%s",
 			self.basePath, http_util.encodeURIComponent(wait_for_sync), http_util.encodeURIComponent(wait_for_collector));
 	})
@@ -76,6 +78,7 @@ function wal_api:admin_wal_properties_get()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_admin/wal/properties",
 			self.basePath);
 	})
@@ -106,6 +109,7 @@ function wal_api:admin_wal_properties_put()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_admin/wal/properties",
 			self.basePath);
 	})
@@ -136,6 +140,7 @@ function wal_api:admin_wal_transactions_get()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_admin/wal/transactions",
 			self.basePath);
 	})
@@ -162,3 +167,6 @@ function wal_api:admin_wal_transactions_get()
 	end
 end
 
+return {
+	new = new_wal_api
+}

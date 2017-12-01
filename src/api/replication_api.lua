@@ -16,15 +16,15 @@ local dkjson = require "dkjson"
 local basexx = require "basexx"
 
 -- model import
-local swagger_replication_api = require "swagger.api.replication_api"
+-- local swagger_replication_api = require "swagger.api.replication_api"
 
-local swagger= {}
+local replication_api= {}
 local swagger_mt = {
 	__name = "replication_api";
-	__index = swagger;
+	__index = replication_api;
 }
 
-local function new_replication_api(host, basePath, schemes)
+local function new_replication_api(host, port, basePath, schemes)
 	local schemes_map = {}
 	for _,v in ipairs(schemes) do
 		schemes_map[v] = v
@@ -32,6 +32,7 @@ local function new_replication_api(host, basePath, schemes)
 	local default_scheme = schemes_map.https or schemes_map.http
 	return setmetatable({
 		host = host;
+		port = port;
 		basePath = basePath or "http://localhost/_db/_system";
 		schemes = schemes_map;
 		default_scheme = default_scheme;
@@ -46,6 +47,7 @@ function replication_api:api_replication_applier_config_get()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/replication/applier-config",
 			self.basePath);
 	})
@@ -76,6 +78,7 @@ function replication_api:api_replication_applier_config_put(json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/replication/applier-config",
 			self.basePath);
 	})
@@ -108,6 +111,7 @@ function replication_api:api_replication_applier_start_put(from)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/replication/applier-start?from=%s",
 			self.basePath, http_util.encodeURIComponent(from));
 	})
@@ -138,6 +142,7 @@ function replication_api:api_replication_applier_state_get()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/replication/applier-state",
 			self.basePath);
 	})
@@ -168,6 +173,7 @@ function replication_api:api_replication_applier_stop_put()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/replication/applier-stop",
 			self.basePath);
 	})
@@ -198,6 +204,7 @@ function replication_api:api_replication_batch_id_delete(id)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/replication/batch/%s",
 			self.basePath, id);
 	})
@@ -228,6 +235,7 @@ function replication_api:api_replication_batch_id_put(json_request_body, id)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/replication/batch/%s",
 			self.basePath, id);
 	})
@@ -260,6 +268,7 @@ function replication_api:api_replication_batch_post(json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/replication/batch",
 			self.basePath);
 	})
@@ -292,6 +301,7 @@ function replication_api:api_replication_cluster_inventory_get(include_system)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/replication/clusterInventory?includeSystem=%s",
 			self.basePath, http_util.encodeURIComponent(include_system));
 	})
@@ -322,6 +332,7 @@ function replication_api:api_replication_dump_get(collection, batch_id, chunk_si
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/replication/dump?collection=%s&chunkSize=%s&batchId=%s&from=%s&to=%s&includeSystem=%s&ticks=%s&flush=%s",
 			self.basePath, http_util.encodeURIComponent(collection), http_util.encodeURIComponent(chunk_size), http_util.encodeURIComponent(batch_id), http_util.encodeURIComponent(from), http_util.encodeURIComponent(to), http_util.encodeURIComponent(include_system), http_util.encodeURIComponent(ticks), http_util.encodeURIComponent(flush));
 	})
@@ -352,6 +363,7 @@ function replication_api:api_replication_inventory_get(include_system)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/replication/inventory?includeSystem=%s",
 			self.basePath, http_util.encodeURIComponent(include_system));
 	})
@@ -382,6 +394,7 @@ function replication_api:api_replication_logger_first_tick_get()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/replication/logger-first-tick",
 			self.basePath);
 	})
@@ -412,6 +425,7 @@ function replication_api:api_replication_logger_follow_get(from, to, chunk_size,
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/replication/logger-follow?from=%s&to=%s&chunkSize=%s&includeSystem=%s",
 			self.basePath, http_util.encodeURIComponent(from), http_util.encodeURIComponent(to), http_util.encodeURIComponent(chunk_size), http_util.encodeURIComponent(include_system));
 	})
@@ -442,6 +456,7 @@ function replication_api:api_replication_logger_state_get()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/replication/logger-state",
 			self.basePath);
 	})
@@ -472,6 +487,7 @@ function replication_api:api_replication_logger_tick_ranges_get()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/replication/logger-tick-ranges",
 			self.basePath);
 	})
@@ -502,6 +518,7 @@ function replication_api:api_replication_make_slave_put(json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/replication/make-slave",
 			self.basePath);
 	})
@@ -534,6 +551,7 @@ function replication_api:api_replication_server_id_get()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/replication/server-id",
 			self.basePath);
 	})
@@ -564,6 +582,7 @@ function replication_api:api_replication_sync_put(json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/replication/sync",
 			self.basePath);
 	})
@@ -592,3 +611,6 @@ function replication_api:api_replication_sync_put(json_request_body)
 	end
 end
 
+return {
+	new = new_replication_api
+}

@@ -16,15 +16,15 @@ local dkjson = require "dkjson"
 local basexx = require "basexx"
 
 -- model import
-local swagger_aql_api = require "swagger.api.aql_api"
+-- local swagger_aql_api = require "swagger.api.aql_api"
 
-local swagger= {}
+local aql_api= {}
 local swagger_mt = {
 	__name = "aql_api";
-	__index = swagger;
+	__index = aql_api;
 }
 
-local function new_aql_api(host, basePath, schemes)
+local function new_aql_api(host, port, basePath, schemes)
 	local schemes_map = {}
 	for _,v in ipairs(schemes) do
 		schemes_map[v] = v
@@ -32,6 +32,7 @@ local function new_aql_api(host, basePath, schemes)
 	local default_scheme = schemes_map.https or schemes_map.http
 	return setmetatable({
 		host = host;
+		port = port;
 		basePath = basePath or "http://localhost/_db/_system";
 		schemes = schemes_map;
 		default_scheme = default_scheme;
@@ -46,6 +47,7 @@ function aql_api:api_aqlfunction_get(namespace)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/aqlfunction?namespace=%s",
 			self.basePath, http_util.encodeURIComponent(namespace));
 	})
@@ -76,6 +78,7 @@ function aql_api:api_aqlfunction_name_delete(name, group)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/aqlfunction/%s?group=%s",
 			self.basePath, name, http_util.encodeURIComponent(group));
 	})
@@ -106,6 +109,7 @@ function aql_api:api_aqlfunction_post(json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/aqlfunction",
 			self.basePath);
 	})
@@ -138,6 +142,7 @@ function aql_api:api_explain_post(json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/explain",
 			self.basePath);
 	})
@@ -170,6 +175,7 @@ function aql_api:api_query_cache_delete()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/query-cache",
 			self.basePath);
 	})
@@ -200,6 +206,7 @@ function aql_api:api_query_cache_properties_get()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/query-cache/properties",
 			self.basePath);
 	})
@@ -230,6 +237,7 @@ function aql_api:api_query_cache_properties_put(json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/query-cache/properties",
 			self.basePath);
 	})
@@ -262,6 +270,7 @@ function aql_api:api_query_current_get()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/query/current",
 			self.basePath);
 	})
@@ -292,6 +301,7 @@ function aql_api:api_query_post(json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/query",
 			self.basePath);
 	})
@@ -324,6 +334,7 @@ function aql_api:api_query_properties_get()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/query/properties",
 			self.basePath);
 	})
@@ -354,6 +365,7 @@ function aql_api:api_query_properties_put(json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/query/properties",
 			self.basePath);
 	})
@@ -386,6 +398,7 @@ function aql_api:api_query_query_id_delete(query_id)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/query/%s",
 			self.basePath, query_id);
 	})
@@ -416,6 +429,7 @@ function aql_api:api_query_slow_delete()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/query/slow",
 			self.basePath);
 	})
@@ -446,6 +460,7 @@ function aql_api:api_query_slow_get()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/query/slow",
 			self.basePath);
 	})
@@ -472,3 +487,6 @@ function aql_api:api_query_slow_get()
 	end
 end
 
+return {
+	new = new_aql_api
+}

@@ -16,15 +16,15 @@ local dkjson = require "dkjson"
 local basexx = require "basexx"
 
 -- model import
-local swagger_graph_edges_api = require "swagger.api.graph_edges_api"
+-- local swagger_graph_edges_api = require "swagger.api.graph_edges_api"
 
-local swagger= {}
+local graph_edges_api= {}
 local swagger_mt = {
 	__name = "graph_edges_api";
-	__index = swagger;
+	__index = graph_edges_api;
 }
 
-local function new_graph_edges_api(host, basePath, schemes)
+local function new_graph_edges_api(host, port, basePath, schemes)
 	local schemes_map = {}
 	for _,v in ipairs(schemes) do
 		schemes_map[v] = v
@@ -32,6 +32,7 @@ local function new_graph_edges_api(host, basePath, schemes)
 	local default_scheme = schemes_map.https or schemes_map.http
 	return setmetatable({
 		host = host;
+		port = port;
 		basePath = basePath or "http://localhost/_db/_system";
 		schemes = schemes_map;
 		default_scheme = default_scheme;
@@ -46,6 +47,7 @@ function graph_edges_api:api_edges_collection_id_get(collection_id, vertex, dire
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/edges/%s?vertex=%s&direction=%s",
 			self.basePath, collection_id, http_util.encodeURIComponent(vertex), http_util.encodeURIComponent(direction));
 	})
@@ -72,3 +74,6 @@ function graph_edges_api:api_edges_collection_id_get(collection_id, vertex, dire
 	end
 end
 
+return {
+	new = new_graph_edges_api
+}

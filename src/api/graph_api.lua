@@ -16,15 +16,15 @@ local dkjson = require "dkjson"
 local basexx = require "basexx"
 
 -- model import
-local swagger_graph_api = require "swagger.api.graph_api"
+-- local swagger_graph_api = require "swagger.api.graph_api"
 
-local swagger= {}
+local graph_api= {}
 local swagger_mt = {
 	__name = "graph_api";
-	__index = swagger;
+	__index = graph_api;
 }
 
-local function new_graph_api(host, basePath, schemes)
+local function new_graph_api(host, port, basePath, schemes)
 	local schemes_map = {}
 	for _,v in ipairs(schemes) do
 		schemes_map[v] = v
@@ -32,6 +32,7 @@ local function new_graph_api(host, basePath, schemes)
 	local default_scheme = schemes_map.https or schemes_map.http
 	return setmetatable({
 		host = host;
+		port = port;
 		basePath = basePath or "http://localhost/_db/_system";
 		schemes = schemes_map;
 		default_scheme = default_scheme;
@@ -46,6 +47,7 @@ function graph_api:api_gharial_get()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/gharial",
 			self.basePath);
 	})
@@ -76,6 +78,7 @@ function graph_api:api_gharial_graph_name_delete()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/gharial/%s",
 			self.basePath);
 	})
@@ -106,6 +109,7 @@ function graph_api:api_gharial_graph_name_edge_collection_name_edge_key_delete()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/gharial/%s/edge/%s/%s",
 			self.basePath);
 	})
@@ -136,6 +140,7 @@ function graph_api:api_gharial_graph_name_edge_collection_name_edge_key_get()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/gharial/%s/edge/%s/%s",
 			self.basePath);
 	})
@@ -166,6 +171,7 @@ function graph_api:api_gharial_graph_name_edge_collection_name_edge_key_patch(js
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/gharial/%s/edge/%s/%s",
 			self.basePath);
 	})
@@ -198,6 +204,7 @@ function graph_api:api_gharial_graph_name_edge_collection_name_edge_key_put(json
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/gharial/%s/edge/%s/%s",
 			self.basePath);
 	})
@@ -230,6 +237,7 @@ function graph_api:api_gharial_graph_name_edge_collection_name_post(json_request
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/gharial/%s/edge/%s",
 			self.basePath);
 	})
@@ -262,6 +270,7 @@ function graph_api:api_gharial_graph_name_edge_definition_name_delete()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/gharial/%s/edge/%s",
 			self.basePath);
 	})
@@ -292,6 +301,7 @@ function graph_api:api_gharial_graph_name_edge_definition_name_put(json_request_
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/gharial/%s/edge/%s",
 			self.basePath);
 	})
@@ -324,6 +334,7 @@ function graph_api:api_gharial_graph_name_edge_get()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/gharial/%s/edge",
 			self.basePath);
 	})
@@ -354,6 +365,7 @@ function graph_api:api_gharial_graph_name_edge_post(json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/gharial/%s/edge",
 			self.basePath);
 	})
@@ -386,6 +398,7 @@ function graph_api:api_gharial_graph_name_get()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/gharial/%s",
 			self.basePath);
 	})
@@ -416,6 +429,7 @@ function graph_api:api_gharial_graph_name_vertex_collection_name_delete()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/gharial/%s/vertex/%s",
 			self.basePath);
 	})
@@ -446,6 +460,7 @@ function graph_api:api_gharial_graph_name_vertex_collection_name_post(json_reque
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/gharial/%s/vertex/%s",
 			self.basePath);
 	})
@@ -478,6 +493,7 @@ function graph_api:api_gharial_graph_name_vertex_collection_name_vertex_key_dele
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/gharial/%s/vertex/%s/%s",
 			self.basePath);
 	})
@@ -508,6 +524,7 @@ function graph_api:api_gharial_graph_name_vertex_collection_name_vertex_key_get(
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/gharial/%s/vertex/%s/%s",
 			self.basePath);
 	})
@@ -538,6 +555,7 @@ function graph_api:api_gharial_graph_name_vertex_collection_name_vertex_key_patc
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/gharial/%s/vertex/%s/%s",
 			self.basePath);
 	})
@@ -570,6 +588,7 @@ function graph_api:api_gharial_graph_name_vertex_collection_name_vertex_key_put(
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/gharial/%s/vertex/%s/%s",
 			self.basePath);
 	})
@@ -602,6 +621,7 @@ function graph_api:api_gharial_graph_name_vertex_get()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/gharial/%s/vertex",
 			self.basePath);
 	})
@@ -632,6 +652,7 @@ function graph_api:api_gharial_graph_name_vertex_post()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/gharial/%s/vertex",
 			self.basePath);
 	})
@@ -662,6 +683,7 @@ function graph_api:api_gharial_post(json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/gharial",
 			self.basePath);
 	})
@@ -690,3 +712,6 @@ function graph_api:api_gharial_post(json_request_body)
 	end
 end
 
+return {
+	new = new_graph_api
+}

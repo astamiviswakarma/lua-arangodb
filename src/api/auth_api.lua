@@ -18,10 +18,10 @@ local basexx = require "basexx"
 -- model import
 -- local swagger_auth_api = require "swagger.api.auth_api"
 
-local swagger= {}
+local auth_api= {}
 local swagger_mt = {
 	__name = "auth_api";
-	__index = swagger;
+	__index = auth_api;
 }
 
 local function new_auth_api(host, port, basePath, schemes)
@@ -43,7 +43,7 @@ local function new_auth_api(host, port, basePath, schemes)
 	}, swagger_mt)
 end
 
-function swagger:api_database_open_auth_post(json_request_body)
+function auth_api:api_database_open_auth_post(json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;

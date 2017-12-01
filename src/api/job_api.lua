@@ -16,15 +16,15 @@ local dkjson = require "dkjson"
 local basexx = require "basexx"
 
 -- model import
-local swagger_job_api = require "swagger.api.job_api"
+-- local swagger_job_api = require "swagger.api.job_api"
 
-local swagger= {}
+local job_api= {}
 local swagger_mt = {
 	__name = "job_api";
-	__index = swagger;
+	__index = job_api;
 }
 
-local function new_job_api(host, basePath, schemes)
+local function new_job_api(host, port, basePath, schemes)
 	local schemes_map = {}
 	for _,v in ipairs(schemes) do
 		schemes_map[v] = v
@@ -32,6 +32,7 @@ local function new_job_api(host, basePath, schemes)
 	local default_scheme = schemes_map.https or schemes_map.http
 	return setmetatable({
 		host = host;
+		port = port;
 		basePath = basePath or "http://localhost/_db/_system";
 		schemes = schemes_map;
 		default_scheme = default_scheme;
@@ -46,6 +47,7 @@ function job_api:api_job_job_id_cancel_put(job_id)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/job/%s/cancel",
 			self.basePath, job_id);
 	})
@@ -76,6 +78,7 @@ function job_api:api_job_job_id_get(job_id)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/job/%s",
 			self.basePath, job_id);
 	})
@@ -106,6 +109,7 @@ function job_api:api_job_job_id_put(job_id)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/job/%s",
 			self.basePath, job_id);
 	})
@@ -136,6 +140,7 @@ function job_api:api_job_type_delete(type)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/job/%s",
 			self.basePath, type);
 	})
@@ -166,6 +171,7 @@ function job_api:api_job_type_get(type)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/job/%s",
 			self.basePath, type);
 	})
@@ -192,3 +198,6 @@ function job_api:api_job_type_get(type)
 	end
 end
 
+return {
+	new = new_job_api
+}

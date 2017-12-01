@@ -16,15 +16,15 @@ local dkjson = require "dkjson"
 local basexx = require "basexx"
 
 -- model import
-local swagger_cursors_api = require "swagger.api.cursors_api"
+-- local swagger_cursors_api = require "swagger.api.cursors_api"
 
-local swagger= {}
+local cursors_api= {}
 local swagger_mt = {
 	__name = "cursors_api";
-	__index = swagger;
+	__index = cursors_api;
 }
 
-local function new_cursors_api(host, basePath, schemes)
+local function new_cursors_api(host, port, basePath, schemes)
 	local schemes_map = {}
 	for _,v in ipairs(schemes) do
 		schemes_map[v] = v
@@ -32,6 +32,7 @@ local function new_cursors_api(host, basePath, schemes)
 	local default_scheme = schemes_map.https or schemes_map.http
 	return setmetatable({
 		host = host;
+		port = port;
 		basePath = basePath or "http://localhost/_db/_system";
 		schemes = schemes_map;
 		default_scheme = default_scheme;
@@ -46,6 +47,7 @@ function cursors_api:api_cursor_cursor_identifier_delete(cursor_identifier)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/cursor/%s",
 			self.basePath, cursor_identifier);
 	})
@@ -76,6 +78,7 @@ function cursors_api:api_cursor_cursor_identifier_put(cursor_identifier)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/cursor/%s",
 			self.basePath, cursor_identifier);
 	})
@@ -106,6 +109,7 @@ function cursors_api:api_cursor_post(json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/cursor",
 			self.basePath);
 	})
@@ -150,3 +154,6 @@ function cursors_api:api_cursor_post(json_request_body)
 	end
 end
 
+return {
+	new = new_cursors_api
+}

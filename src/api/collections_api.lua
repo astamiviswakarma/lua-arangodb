@@ -16,15 +16,15 @@ local dkjson = require "dkjson"
 local basexx = require "basexx"
 
 -- model import
-local swagger_collections_api = require "swagger.api.collections_api"
+-- local swagger_collections_api = require "swagger.api.collections_api"
 
-local swagger= {}
+local collections_api= {}
 local swagger_mt = {
 	__name = "collections_api";
-	__index = swagger;
+	__index = collections_api;
 }
 
-local function new_collections_api(host, basePath, schemes)
+local function new_collections_api(host, port, basePath, schemes)
 	local schemes_map = {}
 	for _,v in ipairs(schemes) do
 		schemes_map[v] = v
@@ -32,6 +32,7 @@ local function new_collections_api(host, basePath, schemes)
 	local default_scheme = schemes_map.https or schemes_map.http
 	return setmetatable({
 		host = host;
+		port = port;
 		basePath = basePath or "http://localhost/_db/_system";
 		schemes = schemes_map;
 		default_scheme = default_scheme;
@@ -46,6 +47,7 @@ function collections_api:api_collection_collection_name_checksum_get(collection_
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/collection/%s/checksum?withRevisions=%s&withData=%s",
 			self.basePath, collection_name, http_util.encodeURIComponent(with_revisions), http_util.encodeURIComponent(with_data));
 	})
@@ -76,6 +78,7 @@ function collections_api:api_collection_collection_name_count_get(collection_nam
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/collection/%s/count",
 			self.basePath, collection_name);
 	})
@@ -106,6 +109,7 @@ function collections_api:api_collection_collection_name_delete(collection_name, 
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/collection/%s?isSystem=%s",
 			self.basePath, collection_name, http_util.encodeURIComponent(is_system));
 	})
@@ -136,6 +140,7 @@ function collections_api:api_collection_collection_name_figures_get(collection_n
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/collection/%s/figures",
 			self.basePath, collection_name);
 	})
@@ -182,6 +187,7 @@ function collections_api:api_collection_collection_name_get(collection_name)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/collection/%s",
 			self.basePath, collection_name);
 	})
@@ -212,6 +218,7 @@ function collections_api:api_collection_collection_name_load_indexes_into_memory
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/collection/%s/loadIndexesIntoMemory",
 			self.basePath, collection_name);
 	})
@@ -242,6 +249,7 @@ function collections_api:api_collection_collection_name_load_put(collection_name
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/collection/%s/load",
 			self.basePath, collection_name);
 	})
@@ -272,6 +280,7 @@ function collections_api:api_collection_collection_name_properties_get(collectio
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/collection/%s/properties",
 			self.basePath, collection_name);
 	})
@@ -302,6 +311,7 @@ function collections_api:api_collection_collection_name_properties_put(collectio
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/collection/%s/properties",
 			self.basePath, collection_name);
 	})
@@ -332,6 +342,7 @@ function collections_api:api_collection_collection_name_rename_put(collection_na
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/collection/%s/rename",
 			self.basePath, collection_name);
 	})
@@ -362,6 +373,7 @@ function collections_api:api_collection_collection_name_revision_get(collection_
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/collection/%s/revision",
 			self.basePath, collection_name);
 	})
@@ -392,6 +404,7 @@ function collections_api:api_collection_collection_name_rotate_put(collection_na
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/collection/%s/rotate",
 			self.basePath, collection_name);
 	})
@@ -422,6 +435,7 @@ function collections_api:api_collection_collection_name_truncate_put(collection_
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/collection/%s/truncate",
 			self.basePath, collection_name);
 	})
@@ -452,6 +466,7 @@ function collections_api:api_collection_collection_name_unload_put(collection_na
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/collection/%s/unload",
 			self.basePath, collection_name);
 	})
@@ -482,6 +497,7 @@ function collections_api:api_collection_get(exclude_system)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/collection?excludeSystem=%s",
 			self.basePath, http_util.encodeURIComponent(exclude_system));
 	})
@@ -512,6 +528,7 @@ function collections_api:api_collection_post(json_request_body, wait_for_sync_re
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/collection?waitForSyncReplication=%s",
 			self.basePath, http_util.encodeURIComponent(wait_for_sync_replication));
 	})
@@ -540,3 +557,6 @@ function collections_api:api_collection_post(json_request_body, wait_for_sync_re
 	end
 end
 
+return {
+	new = new_collections_api
+}

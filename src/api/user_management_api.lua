@@ -16,15 +16,15 @@ local dkjson = require "dkjson"
 local basexx = require "basexx"
 
 -- model import
-local swagger_user_management_api = require "swagger.api.user_management_api"
+-- local swagger_user_management_api = require "swagger.api.user_management_api"
 
-local swagger= {}
+local user_management_api= {}
 local swagger_mt = {
 	__name = "user_management_api";
-	__index = swagger;
+	__index = user_management_api;
 }
 
-local function new_user_management_api(host, basePath, schemes)
+local function new_user_management_api(host, port, basePath, schemes)
 	local schemes_map = {}
 	for _,v in ipairs(schemes) do
 		schemes_map[v] = v
@@ -32,6 +32,7 @@ local function new_user_management_api(host, basePath, schemes)
 	local default_scheme = schemes_map.https or schemes_map.http
 	return setmetatable({
 		host = host;
+		port = port;
 		basePath = basePath or "http://localhost/_db/_system";
 		schemes = schemes_map;
 		default_scheme = default_scheme;
@@ -46,6 +47,7 @@ function user_management_api:api_user_get()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/user",
 			self.basePath);
 	})
@@ -76,6 +78,7 @@ function user_management_api:api_user_post(json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/user",
 			self.basePath);
 	})
@@ -108,6 +111,7 @@ function user_management_api:api_user_user_database_database_collection_get(user
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/user/%s/database/%s/%s",
 			self.basePath, user, database, collection);
 	})
@@ -138,6 +142,7 @@ function user_management_api:api_user_user_database_database_get(user, database)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/user/%s/database/%s",
 			self.basePath, user, database);
 	})
@@ -168,6 +173,7 @@ function user_management_api:api_user_user_database_dbname_collection_delete(use
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/user/%s/database/%s/%s",
 			self.basePath, user, dbname, collection);
 	})
@@ -198,6 +204,7 @@ function user_management_api:api_user_user_database_dbname_collection_put(json_r
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/user/%s/database/%s/%s",
 			self.basePath, user, dbname, collection);
 	})
@@ -230,6 +237,7 @@ function user_management_api:api_user_user_database_dbname_delete(user, dbname)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/user/%s/database/%s",
 			self.basePath, user, dbname);
 	})
@@ -260,6 +268,7 @@ function user_management_api:api_user_user_database_dbname_put(json_request_body
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/user/%s/database/%s",
 			self.basePath, user, dbname);
 	})
@@ -292,6 +301,7 @@ function user_management_api:api_user_user_database_get(user, full)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/user/%s/database?full=%s",
 			self.basePath, user, http_util.encodeURIComponent(full));
 	})
@@ -322,6 +332,7 @@ function user_management_api:api_user_user_delete(user)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/user/%s",
 			self.basePath, user);
 	})
@@ -352,6 +363,7 @@ function user_management_api:api_user_user_get(user)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/user/%s",
 			self.basePath, user);
 	})
@@ -382,6 +394,7 @@ function user_management_api:api_user_user_patch(user, json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/user/%s",
 			self.basePath, user);
 	})
@@ -414,6 +427,7 @@ function user_management_api:api_user_user_put(user, json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/user/%s",
 			self.basePath, user);
 	})
@@ -442,3 +456,6 @@ function user_management_api:api_user_user_put(user, json_request_body)
 	end
 end
 
+return {
+	new = new_user_management_api
+}

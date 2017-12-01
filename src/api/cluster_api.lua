@@ -16,15 +16,15 @@ local dkjson = require "dkjson"
 local basexx = require "basexx"
 
 -- model import
-local swagger_cluster_api = require "swagger.api.cluster_api"
+-- local swagger_cluster_api = require "swagger.api.cluster_api"
 
-local swagger= {}
+local cluster_api= {}
 local swagger_mt = {
 	__name = "cluster_api";
-	__index = swagger;
+	__index = cluster_api;
 }
 
-local function new_cluster_api(host, basePath, schemes)
+local function new_cluster_api(host, port, basePath, schemes)
 	local schemes_map = {}
 	for _,v in ipairs(schemes) do
 		schemes_map[v] = v
@@ -32,6 +32,7 @@ local function new_cluster_api(host, basePath, schemes)
 	local default_scheme = schemes_map.https or schemes_map.http
 	return setmetatable({
 		host = host;
+		port = port;
 		basePath = basePath or "http://localhost/_db/_system";
 		schemes = schemes_map;
 		default_scheme = default_scheme;
@@ -46,6 +47,7 @@ function cluster_api:admin_cluster_check_port_get(port)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_admin/clusterCheckPort?port=%s",
 			self.basePath, http_util.encodeURIComponent(port));
 	})
@@ -76,6 +78,7 @@ function cluster_api:admin_cluster_statistics_get(d_bserver)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_admin/clusterStatistics?DBserver=%s",
 			self.basePath, http_util.encodeURIComponent(d_bserver));
 	})
@@ -106,6 +109,7 @@ function cluster_api:admin_cluster_test_delete()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_admin/cluster-test",
 			self.basePath);
 	})
@@ -136,6 +140,7 @@ function cluster_api:admin_cluster_test_get()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_admin/cluster-test",
 			self.basePath);
 	})
@@ -166,6 +171,7 @@ function cluster_api:admin_cluster_test_head()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_admin/cluster-test",
 			self.basePath);
 	})
@@ -196,6 +202,7 @@ function cluster_api:admin_cluster_test_patch(json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_admin/cluster-test",
 			self.basePath);
 	})
@@ -228,6 +235,7 @@ function cluster_api:admin_cluster_test_post(json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_admin/cluster-test",
 			self.basePath);
 	})
@@ -260,6 +268,7 @@ function cluster_api:admin_cluster_test_put(json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_admin/cluster-test",
 			self.basePath);
 	})
@@ -288,3 +297,6 @@ function cluster_api:admin_cluster_test_put(json_request_body)
 	end
 end
 
+return {
+	new = new_cluster_api
+}

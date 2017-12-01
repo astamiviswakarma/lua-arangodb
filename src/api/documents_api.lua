@@ -16,15 +16,15 @@ local dkjson = require "dkjson"
 local basexx = require "basexx"
 
 -- model import
-local swagger_documents_api = require "swagger.api.documents_api"
+-- local swagger_documents_api = require "swagger.api.documents_api"
 
-local swagger= {}
+local documents_api= {}
 local swagger_mt = {
 	__name = "documents_api";
-	__index = swagger;
+	__index = documents_api;
 }
 
-local function new_documents_api(host, basePath, schemes)
+local function new_documents_api(host, port, basePath, schemes)
 	local schemes_map = {}
 	for _,v in ipairs(schemes) do
 		schemes_map[v] = v
@@ -32,6 +32,7 @@ local function new_documents_api(host, basePath, schemes)
 	local default_scheme = schemes_map.https or schemes_map.http
 	return setmetatable({
 		host = host;
+		port = port;
 		basePath = basePath or "http://localhost/_db/_system";
 		schemes = schemes_map;
 		default_scheme = default_scheme;
@@ -46,6 +47,7 @@ function documents_api:api_document_collection_delete(json_request_body, collect
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/document/%s?waitForSync=%s&returnOld=%s&ignoreRevs=%s",
 			self.basePath, collection, http_util.encodeURIComponent(wait_for_sync), http_util.encodeURIComponent(return_old), http_util.encodeURIComponent(ignore_revs));
 	})
@@ -78,6 +80,7 @@ function documents_api:api_document_collection_patch(json_request_body, collecti
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/document/%s?keepNull=%s&mergeObjects=%s&waitForSync=%s&ignoreRevs=%s&returnOld=%s&returnNew=%s",
 			self.basePath, collection, http_util.encodeURIComponent(keep_null), http_util.encodeURIComponent(merge_objects), http_util.encodeURIComponent(wait_for_sync), http_util.encodeURIComponent(ignore_revs), http_util.encodeURIComponent(return_old), http_util.encodeURIComponent(return_new));
 	})
@@ -110,6 +113,7 @@ function documents_api:api_document_collection_post(collection, json_request_bod
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/document/%s?collection=%s&waitForSync=%s&returnNew=%s&silent=%s",
 			self.basePath, collection, http_util.encodeURIComponent(collection2), http_util.encodeURIComponent(wait_for_sync), http_util.encodeURIComponent(return_new), http_util.encodeURIComponent(silent));
 	})
@@ -142,6 +146,7 @@ function documents_api:api_document_collection_put(json_request_body, collection
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/document/%s?waitForSync=%s&ignoreRevs=%s&returnOld=%s&returnNew=%s",
 			self.basePath, collection, http_util.encodeURIComponent(wait_for_sync), http_util.encodeURIComponent(ignore_revs), http_util.encodeURIComponent(return_old), http_util.encodeURIComponent(return_new));
 	})
@@ -174,6 +179,7 @@ function documents_api:api_document_document_handle_delete(document_handle, wait
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/document/%s?waitForSync=%s&returnOld=%s&silent=%s",
 			self.basePath, document_handle, http_util.encodeURIComponent(wait_for_sync), http_util.encodeURIComponent(return_old), http_util.encodeURIComponent(silent));
 	})
@@ -205,6 +211,7 @@ function documents_api:api_document_document_handle_get(document_handle, if_none
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/document/%s",
 			self.basePath, document_handle);
 	})
@@ -237,6 +244,7 @@ function documents_api:api_document_document_handle_head(document_handle, if_non
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/document/%s",
 			self.basePath, document_handle);
 	})
@@ -269,6 +277,7 @@ function documents_api:api_document_document_handle_patch(json_request_body, doc
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/document/%s?keepNull=%s&mergeObjects=%s&waitForSync=%s&ignoreRevs=%s&returnOld=%s&returnNew=%s&silent=%s",
 			self.basePath, document_handle, http_util.encodeURIComponent(keep_null), http_util.encodeURIComponent(merge_objects), http_util.encodeURIComponent(wait_for_sync), http_util.encodeURIComponent(ignore_revs), http_util.encodeURIComponent(return_old), http_util.encodeURIComponent(return_new), http_util.encodeURIComponent(silent));
 	})
@@ -302,6 +311,7 @@ function documents_api:api_document_document_handle_put(json_request_body, docum
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/document/%s?waitForSync=%s&ignoreRevs=%s&returnOld=%s&returnNew=%s&silent=%s",
 			self.basePath, document_handle, http_util.encodeURIComponent(wait_for_sync), http_util.encodeURIComponent(ignore_revs), http_util.encodeURIComponent(return_old), http_util.encodeURIComponent(return_new), http_util.encodeURIComponent(silent));
 	})
@@ -335,6 +345,7 @@ function documents_api:api_simple_all_keys_put(json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/simple/all-keys",
 			self.basePath);
 	})
@@ -363,3 +374,6 @@ function documents_api:api_simple_all_keys_put(json_request_body)
 	end
 end
 
+return {
+	new = new_documents_api
+}

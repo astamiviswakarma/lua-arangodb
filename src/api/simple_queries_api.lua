@@ -16,15 +16,15 @@ local dkjson = require "dkjson"
 local basexx = require "basexx"
 
 -- model import
-local swagger_simple_queries_api = require "swagger.api.simple_queries_api"
+-- local swagger_simple_queries_api = require "swagger.api.simple_queries_api"
 
-local swagger= {}
+local simple_queries_api= {}
 local swagger_mt = {
 	__name = "simple_queries_api";
-	__index = swagger;
+	__index = simple_queries_api;
 }
 
-local function new_simple_queries_api(host, basePath, schemes)
+local function new_simple_queries_api(host, port, basePath, schemes)
 	local schemes_map = {}
 	for _,v in ipairs(schemes) do
 		schemes_map[v] = v
@@ -32,6 +32,7 @@ local function new_simple_queries_api(host, basePath, schemes)
 	local default_scheme = schemes_map.https or schemes_map.http
 	return setmetatable({
 		host = host;
+		port = port;
 		basePath = basePath or "http://localhost/_db/_system";
 		schemes = schemes_map;
 		default_scheme = default_scheme;
@@ -46,6 +47,7 @@ function simple_queries_api:api_simple_all_put(json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/simple/all",
 			self.basePath);
 	})
@@ -78,6 +80,7 @@ function simple_queries_api:api_simple_any_put(json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/simple/any",
 			self.basePath);
 	})
@@ -110,6 +113,7 @@ function simple_queries_api:api_simple_by_example_put(json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/simple/by-example",
 			self.basePath);
 	})
@@ -142,6 +146,7 @@ function simple_queries_api:api_simple_first_example_put(json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/simple/first-example",
 			self.basePath);
 	})
@@ -174,6 +179,7 @@ function simple_queries_api:api_simple_fulltext_put(json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/simple/fulltext",
 			self.basePath);
 	})
@@ -206,6 +212,7 @@ function simple_queries_api:api_simple_lookup_by_keys_put(json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/simple/lookup-by-keys",
 			self.basePath);
 	})
@@ -238,6 +245,7 @@ function simple_queries_api:api_simple_near_put(json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/simple/near",
 			self.basePath);
 	})
@@ -270,6 +278,7 @@ function simple_queries_api:api_simple_range_put(json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/simple/range",
 			self.basePath);
 	})
@@ -302,6 +311,7 @@ function simple_queries_api:api_simple_remove_by_example_put(json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/simple/remove-by-example",
 			self.basePath);
 	})
@@ -334,6 +344,7 @@ function simple_queries_api:api_simple_remove_by_keys_put(json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/simple/remove-by-keys",
 			self.basePath);
 	})
@@ -366,6 +377,7 @@ function simple_queries_api:api_simple_replace_by_example_put(json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/simple/replace-by-example",
 			self.basePath);
 	})
@@ -398,6 +410,7 @@ function simple_queries_api:api_simple_update_by_example_put(json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/simple/update-by-example",
 			self.basePath);
 	})
@@ -430,6 +443,7 @@ function simple_queries_api:api_simple_within_put(json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/simple/within",
 			self.basePath);
 	})
@@ -462,6 +476,7 @@ function simple_queries_api:api_simple_within_rectangle_put(json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/simple/within-rectangle",
 			self.basePath);
 	})
@@ -490,3 +505,6 @@ function simple_queries_api:api_simple_within_rectangle_put(json_request_body)
 	end
 end
 
+return {
+	new = new_simple_queries_api
+}

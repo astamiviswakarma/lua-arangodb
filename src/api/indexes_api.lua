@@ -16,15 +16,15 @@ local dkjson = require "dkjson"
 local basexx = require "basexx"
 
 -- model import
-local swagger_indexes_api = require "swagger.api.indexes_api"
+-- local swagger_indexes_api = require "swagger.api.indexes_api"
 
-local swagger= {}
+local indexes_api= {}
 local swagger_mt = {
 	__name = "indexes_api";
-	__index = swagger;
+	__index = indexes_api;
 }
 
-local function new_indexes_api(host, basePath, schemes)
+local function new_indexes_api(host, port, basePath, schemes)
 	local schemes_map = {}
 	for _,v in ipairs(schemes) do
 		schemes_map[v] = v
@@ -32,6 +32,7 @@ local function new_indexes_api(host, basePath, schemes)
 	local default_scheme = schemes_map.https or schemes_map.http
 	return setmetatable({
 		host = host;
+		port = port;
 		basePath = basePath or "http://localhost/_db/_system";
 		schemes = schemes_map;
 		default_scheme = default_scheme;
@@ -46,6 +47,7 @@ function indexes_api:api_index_get(collection)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/index?collection=%s",
 			self.basePath, http_util.encodeURIComponent(collection));
 	})
@@ -76,6 +78,7 @@ function indexes_api:api_index_index_handle_delete(index_handle)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/index/%s",
 			self.basePath, index_handle);
 	})
@@ -106,6 +109,7 @@ function indexes_api:api_index_index_handle_get(index_handle)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/index/%s",
 			self.basePath, index_handle);
 	})
@@ -136,6 +140,7 @@ function indexes_api:api_indexfulltext_post(collection_name, json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/index#fulltext?collection-name=%s",
 			self.basePath, http_util.encodeURIComponent(collection_name));
 	})
@@ -168,6 +173,7 @@ function indexes_api:api_indexgeneral_post(collection, json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/index#general?collection=%s",
 			self.basePath, http_util.encodeURIComponent(collection));
 	})
@@ -200,6 +206,7 @@ function indexes_api:api_indexgeo_post(collection, json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/index#geo?collection=%s",
 			self.basePath, http_util.encodeURIComponent(collection));
 	})
@@ -232,6 +239,7 @@ function indexes_api:api_indexhash_post(collection_name, json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/index#hash?collection-name=%s",
 			self.basePath, http_util.encodeURIComponent(collection_name));
 	})
@@ -264,6 +272,7 @@ function indexes_api:api_indexpersistent_post(collection_name, json_request_body
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/index#persistent?collection-name=%s",
 			self.basePath, http_util.encodeURIComponent(collection_name));
 	})
@@ -296,6 +305,7 @@ function indexes_api:api_indexskiplist_post(collection_name, json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/index#skiplist?collection-name=%s",
 			self.basePath, http_util.encodeURIComponent(collection_name));
 	})
@@ -324,3 +334,6 @@ function indexes_api:api_indexskiplist_post(collection_name, json_request_body)
 	end
 end
 
+return {
+	new = new_indexes_api
+}

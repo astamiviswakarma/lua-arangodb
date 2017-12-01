@@ -16,15 +16,15 @@ local dkjson = require "dkjson"
 local basexx = require "basexx"
 
 -- model import
-local swagger_administration_api = require "swagger.api.administration_api"
+-- local swagger_administration_api = require "swagger.api.administration_api"
 
-local swagger= {}
+local administration_api= {}
 local swagger_mt = {
 	__name = "administration_api";
-	__index = swagger;
+	__index = administration_api;
 }
 
-local function new_administration_api(host, basePath, schemes)
+local function new_administration_api(host, port, basePath, schemes)
 	local schemes_map = {}
 	for _,v in ipairs(schemes) do
 		schemes_map[v] = v
@@ -32,6 +32,7 @@ local function new_administration_api(host, basePath, schemes)
 	local default_scheme = schemes_map.https or schemes_map.http
 	return setmetatable({
 		host = host;
+		port = port;
 		basePath = basePath or "http://localhost/_db/_system";
 		schemes = schemes_map;
 		default_scheme = default_scheme;
@@ -46,6 +47,7 @@ function administration_api:admin_database_target_version_get()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_admin/database/target-version",
 			self.basePath);
 	})
@@ -76,6 +78,7 @@ function administration_api:admin_echo_get()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_admin/echo",
 			self.basePath);
 	})
@@ -106,6 +109,7 @@ function administration_api:admin_execute_post(json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_admin/execute",
 			self.basePath);
 	})
@@ -138,6 +142,7 @@ function administration_api:admin_log_get(upto, level, start, size, offset, sear
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_admin/log?upto=%s&level=%s&start=%s&size=%s&offset=%s&search=%s&sort=%s",
 			self.basePath, http_util.encodeURIComponent(upto), http_util.encodeURIComponent(level), http_util.encodeURIComponent(start), http_util.encodeURIComponent(size), http_util.encodeURIComponent(offset), http_util.encodeURIComponent(search), http_util.encodeURIComponent(sort));
 	})
@@ -168,6 +173,7 @@ function administration_api:admin_log_level_get()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_admin/log/level",
 			self.basePath);
 	})
@@ -198,6 +204,7 @@ function administration_api:admin_log_level_put()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_admin/log/level",
 			self.basePath);
 	})
@@ -228,6 +235,7 @@ function administration_api:admin_long_echo_get()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_admin/long_echo",
 			self.basePath);
 	})
@@ -258,6 +266,7 @@ function administration_api:admin_routing_reload_post()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_admin/routing/reload",
 			self.basePath);
 	})
@@ -288,6 +297,7 @@ function administration_api:admin_server_id_get()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_admin/server/id",
 			self.basePath);
 	})
@@ -318,6 +328,7 @@ function administration_api:admin_server_role_get()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_admin/server/role",
 			self.basePath);
 	})
@@ -348,6 +359,7 @@ function administration_api:admin_shutdown_delete()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_admin/shutdown",
 			self.basePath);
 	})
@@ -378,6 +390,7 @@ function administration_api:admin_sleep_get(duration)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_admin/sleep",
 			self.basePath, duration);
 	})
@@ -408,6 +421,7 @@ function administration_api:admin_statistics_description_get()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_admin/statistics-description",
 			self.basePath);
 	})
@@ -438,6 +452,7 @@ function administration_api:admin_statistics_get()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_admin/statistics",
 			self.basePath);
 	})
@@ -468,6 +483,7 @@ function administration_api:admin_test_post(json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_admin/test",
 			self.basePath);
 	})
@@ -500,6 +516,7 @@ function administration_api:admin_time_get()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_admin/time",
 			self.basePath);
 	})
@@ -530,6 +547,7 @@ function administration_api:api_cluster_endpoints_get()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/cluster/endpoints",
 			self.basePath);
 	})
@@ -560,6 +578,7 @@ function administration_api:api_endpoint_get()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/endpoint",
 			self.basePath);
 	})
@@ -590,6 +609,7 @@ function administration_api:api_engine_get()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/engine",
 			self.basePath);
 	})
@@ -636,6 +656,7 @@ function administration_api:api_tasks_get()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/tasks",
 			self.basePath);
 	})
@@ -666,6 +687,7 @@ function administration_api:api_tasks_id_delete(id)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/tasks/%s",
 			self.basePath, id);
 	})
@@ -696,6 +718,7 @@ function administration_api:api_tasks_id_get(id)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/tasks/%s",
 			self.basePath, id);
 	})
@@ -726,6 +749,7 @@ function administration_api:api_tasks_id_put(id, json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/tasks/%s",
 			self.basePath, id);
 	})
@@ -758,6 +782,7 @@ function administration_api:api_tasks_post(json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/tasks",
 			self.basePath);
 	})
@@ -790,6 +815,7 @@ function administration_api:api_version_get(details)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_api/version?details=%s",
 			self.basePath, http_util.encodeURIComponent(details));
 	})
@@ -832,3 +858,6 @@ function administration_api:api_version_get(details)
 	end
 end
 
+return {
+	new = new_administration_api
+}
