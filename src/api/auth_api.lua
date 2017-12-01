@@ -24,7 +24,7 @@ local swagger_mt = {
 	__index = swagger;
 }
 
-local function new_auth_api(host, basePath, schemes)
+local function new_auth_api(host, port, basePath, schemes)
 	local schemes_map = {}
 	for _,v in ipairs(schemes) do
 		schemes_map[v] = v
@@ -32,6 +32,7 @@ local function new_auth_api(host, basePath, schemes)
 	local default_scheme = schemes_map.https or schemes_map.http
 	return setmetatable({
 		host = host;
+		port = port;
 		basePath = basePath or "http://localhost/_db/_system";
 		schemes = schemes_map;
 		default_scheme = default_scheme;
@@ -42,10 +43,11 @@ local function new_auth_api(host, basePath, schemes)
 	}, swagger_mt)
 end
 
-function auth_api:api_database_open_auth_post(json_request_body)
+function swagger:api_database_open_auth_post(json_request_body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
+		port = self.port;
 		path = string.format("%s/_db/_system/_open/auth",
 			self.basePath);
 	})
@@ -54,22 +56,25 @@ function auth_api:api_database_open_auth_post(json_request_body)
 	req.headers:upsert(":method", "POST")
 	req:set_body(dkjson.encode(json_request_body))
 
-
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(3)
 	if not headers then
 		return nil, stream, errno
 	end
 	local http_status = headers:get(":status")
-	if http_status:sub(1,1) == "2" then
+	if http_status:sub(1,1) == "5" then -- thinking this should not be here anyways
 		return nil, headers
 	else
 		local body, err, errno2 = stream:get_body_as_string()
+		stream:shutdown()
 		if not body then
 			return nil, err, errno2
 		end
-		stream:shutdown()
 		-- return the error message (http body)
 		return nil, http_status, body
 	end
 end
+
+return {
+	new = new_auth_api
+}
