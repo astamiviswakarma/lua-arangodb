@@ -2,7 +2,7 @@ local inspect = require("inspect")
 local jsf_post_api_database_open_auth = require("arango.model.jsf_post_api_database_open_auth")
 local new_auth_api = require("arango.auth_api")
 local dkjson = require "dkjson"
-describe("Testing authenticatio to arangodb", function()
+describe("Testing authentication to arangodb", function()
     it("should able to login", function()
         local auth = jsf_post_api_database_open_auth.new("root", "openSesame")
         local auth_api = new_auth_api.new("localhost",8000,"",{"http"})
