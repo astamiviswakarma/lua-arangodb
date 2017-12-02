@@ -5,7 +5,7 @@ local dkjson = require "dkjson"
 describe("Testing authentication to arangodb", function()
     it("should able to login", function()
         local auth = jsf_post_api_database_open_auth.new("root", "openSesame")
-        local auth_api = new_auth_api.new("localhost",8000,"",{"http"})
+        local auth_api = new_auth_api.new({"http"}, "localhost", 8000)
         local err, http_status, body = auth_api:api_database_open_auth_post(auth)
         local json = dkjson.decode(body);
         assert.are.same(http_status, '200');
