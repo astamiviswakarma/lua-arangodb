@@ -55,6 +55,10 @@ function graph_edges_api:api_edges_collection_id_get(collection_id, vertex, dire
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "GET")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)

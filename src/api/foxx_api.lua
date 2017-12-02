@@ -55,6 +55,9 @@ function foxx_api:api_foxx_commit_post(replace)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "POST")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -86,6 +89,9 @@ function foxx_api:api_foxx_configuration_get(mount)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "GET")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -117,6 +123,10 @@ function foxx_api:api_foxx_configuration_patch(json_request_body, mount)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "PATCH")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 	req:set_body(dkjson.encode(json_request_body))
 
 
@@ -150,6 +160,10 @@ function foxx_api:api_foxx_configuration_put(json_request_body, mount)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "PUT")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 	req:set_body(dkjson.encode(json_request_body))
 
 
@@ -183,6 +197,9 @@ function foxx_api:api_foxx_dependencies_get(mount)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "GET")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -214,6 +231,10 @@ function foxx_api:api_foxx_dependencies_patch(json_request_body, mount)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "PATCH")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 	req:set_body(dkjson.encode(json_request_body))
 
 
@@ -247,6 +268,10 @@ function foxx_api:api_foxx_dependencies_put(json_request_body, mount)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "PUT")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 	req:set_body(dkjson.encode(json_request_body))
 
 
@@ -280,6 +305,9 @@ function foxx_api:api_foxx_development_delete(mount)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "DELETE")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -311,6 +339,9 @@ function foxx_api:api_foxx_development_post(mount)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "POST")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -342,6 +373,9 @@ function foxx_api:api_foxx_download_post(mount)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "POST")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -373,6 +407,9 @@ function foxx_api:api_foxx_get()
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "GET")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -404,6 +441,10 @@ function foxx_api:api_foxx_post(mount, development, setup, legacy)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "POST")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -435,6 +476,10 @@ function foxx_api:api_foxx_readme_get(mount)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "GET")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -466,6 +511,10 @@ function foxx_api:api_foxx_scripts_get(mount)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "GET")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -497,6 +546,10 @@ function foxx_api:api_foxx_scripts_name_post(name, json_request_body)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "POST")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 	req:set_body(dkjson.encode(json_request_body))
 
 
@@ -530,6 +583,10 @@ function foxx_api:api_foxx_service_delete(mount, teardown)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "DELETE")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -561,6 +618,10 @@ function foxx_api:api_foxx_service_get(mount)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "GET")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -592,6 +653,10 @@ function foxx_api:api_foxx_service_patch(mount, teardown, setup, legacy)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "PATCH")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -623,6 +688,10 @@ function foxx_api:api_foxx_service_put(mount, teardown, setup, legacy)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "PUT")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -654,6 +723,10 @@ function foxx_api:api_foxx_swagger_get(mount)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "GET")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -685,6 +758,10 @@ function foxx_api:api_foxx_tests_post(mount, reporter, idiomatic)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "POST")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)

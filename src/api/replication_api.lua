@@ -55,6 +55,9 @@ function replication_api:api_replication_applier_config_get()
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "GET")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -86,6 +89,9 @@ function replication_api:api_replication_applier_config_put(json_request_body)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "PUT")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
 	req:set_body(dkjson.encode(json_request_body))
 
 
@@ -119,6 +125,9 @@ function replication_api:api_replication_applier_start_put(from)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "PUT")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -150,6 +159,9 @@ function replication_api:api_replication_applier_state_get()
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "GET")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -181,6 +193,9 @@ function replication_api:api_replication_applier_stop_put()
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "PUT")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -212,6 +227,9 @@ function replication_api:api_replication_batch_id_delete(id)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "DELETE")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -243,6 +261,10 @@ function replication_api:api_replication_batch_id_put(json_request_body, id)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "PUT")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 	req:set_body(dkjson.encode(json_request_body))
 
 
@@ -276,6 +298,10 @@ function replication_api:api_replication_batch_post(json_request_body)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "POST")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 	req:set_body(dkjson.encode(json_request_body))
 
 
@@ -309,6 +335,9 @@ function replication_api:api_replication_cluster_inventory_get(include_system)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "GET")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -340,6 +369,9 @@ function replication_api:api_replication_dump_get(collection, batch_id, chunk_si
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "GET")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -371,6 +403,9 @@ function replication_api:api_replication_inventory_get(include_system)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "GET")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -402,6 +437,9 @@ function replication_api:api_replication_logger_first_tick_get()
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "GET")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -433,6 +471,9 @@ function replication_api:api_replication_logger_follow_get(from, to, chunk_size,
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "GET")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -464,6 +505,9 @@ function replication_api:api_replication_logger_state_get()
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "GET")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -495,6 +539,9 @@ function replication_api:api_replication_logger_tick_ranges_get()
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "GET")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -526,6 +573,10 @@ function replication_api:api_replication_make_slave_put(json_request_body)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "PUT")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 	req:set_body(dkjson.encode(json_request_body))
 
 
@@ -559,6 +610,9 @@ function replication_api:api_replication_server_id_get()
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "GET")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -590,6 +644,10 @@ function replication_api:api_replication_sync_put(json_request_body)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "PUT")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 	req:set_body(dkjson.encode(json_request_body))
 
 

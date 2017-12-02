@@ -55,6 +55,9 @@ function wal_api:admin_wal_flush_put(wait_for_sync, wait_for_collector)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "PUT")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -86,6 +89,9 @@ function wal_api:admin_wal_properties_get()
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "GET")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -117,6 +123,9 @@ function wal_api:admin_wal_properties_put()
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "PUT")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -148,6 +157,9 @@ function wal_api:admin_wal_transactions_get()
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "GET")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)

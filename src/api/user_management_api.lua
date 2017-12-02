@@ -55,6 +55,9 @@ function user_management_api:api_user_get()
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "GET")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -86,6 +89,10 @@ function user_management_api:api_user_post(json_request_body)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "POST")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 	req:set_body(dkjson.encode(json_request_body))
 
 
@@ -119,6 +126,9 @@ function user_management_api:api_user_user_database_database_collection_get(user
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "GET")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -150,6 +160,9 @@ function user_management_api:api_user_user_database_database_get(user, database)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "GET")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -181,6 +194,9 @@ function user_management_api:api_user_user_database_dbname_collection_delete(use
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "DELETE")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -212,6 +228,10 @@ function user_management_api:api_user_user_database_dbname_collection_put(json_r
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "PUT")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 	req:set_body(dkjson.encode(json_request_body))
 
 
@@ -245,6 +265,9 @@ function user_management_api:api_user_user_database_dbname_delete(user, dbname)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "DELETE")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -276,6 +299,10 @@ function user_management_api:api_user_user_database_dbname_put(json_request_body
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "PUT")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 	req:set_body(dkjson.encode(json_request_body))
 
 
@@ -309,6 +336,10 @@ function user_management_api:api_user_user_database_get(user, full)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "GET")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -340,6 +371,10 @@ function user_management_api:api_user_user_delete(user)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "DELETE")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -371,6 +406,10 @@ function user_management_api:api_user_user_get(user)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "GET")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -402,6 +441,10 @@ function user_management_api:api_user_user_patch(user, json_request_body)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "PATCH")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 	req:set_body(dkjson.encode(json_request_body))
 
 
@@ -435,6 +478,10 @@ function user_management_api:api_user_user_put(user, json_request_body)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "PUT")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 	req:set_body(dkjson.encode(json_request_body))
 
 

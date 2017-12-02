@@ -55,6 +55,9 @@ function indexes_api:api_index_get(collection)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "GET")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -86,6 +89,9 @@ function indexes_api:api_index_index_handle_delete(index_handle)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "DELETE")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -117,6 +123,9 @@ function indexes_api:api_index_index_handle_get(index_handle)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "GET")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -148,6 +157,10 @@ function indexes_api:api_indexfulltext_post(collection_name, json_request_body)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "POST")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 	req:set_body(dkjson.encode(json_request_body))
 
 
@@ -181,6 +194,10 @@ function indexes_api:api_indexgeneral_post(collection, json_request_body)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "POST")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 	req:set_body(dkjson.encode(json_request_body))
 
 
@@ -214,6 +231,10 @@ function indexes_api:api_indexgeo_post(collection, json_request_body)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "POST")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 	req:set_body(dkjson.encode(json_request_body))
 
 
@@ -247,6 +268,10 @@ function indexes_api:api_indexhash_post(collection_name, json_request_body)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "POST")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 	req:set_body(dkjson.encode(json_request_body))
 
 
@@ -280,6 +305,10 @@ function indexes_api:api_indexpersistent_post(collection_name, json_request_body
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "POST")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 	req:set_body(dkjson.encode(json_request_body))
 
 
@@ -313,6 +342,10 @@ function indexes_api:api_indexskiplist_post(collection_name, json_request_body)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "POST")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 	req:set_body(dkjson.encode(json_request_body))
 
 

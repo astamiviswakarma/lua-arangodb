@@ -55,6 +55,9 @@ function job_api:api_job_job_id_cancel_put(job_id)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "PUT")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -86,6 +89,9 @@ function job_api:api_job_job_id_get(job_id)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "GET")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -117,6 +123,9 @@ function job_api:api_job_job_id_put(job_id)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "PUT")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -148,6 +157,9 @@ function job_api:api_job_type_delete(type)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "DELETE")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -179,6 +191,9 @@ function job_api:api_job_type_get(type)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "GET")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)

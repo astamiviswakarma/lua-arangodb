@@ -55,6 +55,10 @@ function transactions_api:api_transaction_post(json_request_body)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "POST")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 	req:set_body(dkjson.encode(json_request_body))
 
 

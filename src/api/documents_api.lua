@@ -55,6 +55,10 @@ function documents_api:api_document_collection_delete(json_request_body, collect
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "DELETE")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 	req:set_body(dkjson.encode(json_request_body))
 
 
@@ -88,6 +92,10 @@ function documents_api:api_document_collection_patch(json_request_body, collecti
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "PATCH")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 	req:set_body(dkjson.encode(json_request_body))
 
 
@@ -121,6 +129,10 @@ function documents_api:api_document_collection_post(collection, json_request_bod
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "POST")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 	req:set_body(dkjson.encode(json_request_body))
 
 
@@ -154,6 +166,10 @@ function documents_api:api_document_collection_put(json_request_body, collection
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "PUT")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 	req:set_body(dkjson.encode(json_request_body))
 
 
@@ -187,6 +203,10 @@ function documents_api:api_document_document_handle_delete(document_handle, wait
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "DELETE")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 	req.headers:upsert("If-Match", if_match)
 
 	-- make the HTTP call
@@ -219,6 +239,10 @@ function documents_api:api_document_document_handle_get(document_handle, if_none
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "GET")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 	req.headers:upsert("If-None-Match", if_none_match)
 	req.headers:upsert("If-Match", if_match)
 
@@ -252,6 +276,10 @@ function documents_api:api_document_document_handle_head(document_handle, if_non
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "HEAD")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 	req.headers:upsert("If-None-Match", if_none_match)
 	req.headers:upsert("If-Match", if_match)
 
@@ -285,6 +313,10 @@ function documents_api:api_document_document_handle_patch(json_request_body, doc
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "PATCH")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 	req.headers:upsert("If-Match", if_match)
 	req:set_body(dkjson.encode(json_request_body))
 
@@ -319,6 +351,10 @@ function documents_api:api_document_document_handle_put(json_request_body, docum
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "PUT")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 	req.headers:upsert("If-Match", if_match)
 	req:set_body(dkjson.encode(json_request_body))
 
@@ -353,6 +389,10 @@ function documents_api:api_simple_all_keys_put(json_request_body)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "PUT")
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 	req:set_body(dkjson.encode(json_request_body))
 
 

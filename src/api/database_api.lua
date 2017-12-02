@@ -56,6 +56,10 @@ function database_api:api_database_current_get()
 	-- set HTTP verb
 	req.headers:upsert(":method", "GET")
 
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
@@ -86,6 +90,10 @@ function database_api:api_database_database_name_delete(database_name)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "DELETE")
+
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -118,13 +126,17 @@ function database_api:api_database_get()
 	-- set HTTP verb
 	req.headers:upsert(":method", "GET")
 
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
+
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
 	local http_status = headers:get(":status")
-	if http_status:sub(1,1) == "2" then
+	if http_status:sub(1,1) == "5" then
 		return nil, headers
 	else
 		local body, err, errno2 = stream:get_body_as_string()
@@ -150,6 +162,9 @@ function database_api:api_database_post(json_request_body)
 	req.headers:upsert(":method", "POST")
 	req:set_body(dkjson.encode(json_request_body))
 
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
@@ -181,6 +196,10 @@ function database_api:api_database_user_get()
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "GET")
+
+	if(self.access_token) then
+		req.headers:upsert("Authorization", string.format("Bearer %s", self.access_token))
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go(self.timeout)
