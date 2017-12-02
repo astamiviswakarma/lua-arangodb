@@ -24,7 +24,7 @@ local swagger_mt = {
 	__index = database_api;
 }
 
-local function new_database_api(host, port, basePath, schemes)
+local function new_database_api(schemes, host, port, basePath)
 	local schemes_map = {}
 	for _,v in ipairs(schemes) do
 		schemes_map[v] = v
@@ -32,8 +32,8 @@ local function new_database_api(host, port, basePath, schemes)
 	local default_scheme = schemes_map.https or schemes_map.http
 	return setmetatable({
 		host = host;
-		port = port;
-		basePath = basePath or "http://localhost/_db/_system";
+		port = port or 80;
+		basePath = basePath or "";
 		schemes = schemes_map;
 		default_scheme = default_scheme;
 		http_username = nil;
