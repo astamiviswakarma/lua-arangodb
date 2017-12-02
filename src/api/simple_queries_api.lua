@@ -24,7 +24,7 @@ local swagger_mt = {
 	__index = simple_queries_api;
 }
 
-local function new_simple_queries_api(schemes, host, port, basePath)
+local function new_simple_queries_api(schemes, host, port, basePath, timeout)
 	local schemes_map = {}
 	for _,v in ipairs(schemes) do
 		schemes_map[v] = v
@@ -33,6 +33,7 @@ local function new_simple_queries_api(schemes, host, port, basePath)
 	return setmetatable({
 		host = host;
 		port = port or 80;
+		timeout = timeout or 3;
 		basePath = basePath or "";
 		schemes = schemes_map;
 		default_scheme = default_scheme;
@@ -58,7 +59,7 @@ function simple_queries_api:api_simple_all_put(json_request_body)
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -91,7 +92,7 @@ function simple_queries_api:api_simple_any_put(json_request_body)
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -124,7 +125,7 @@ function simple_queries_api:api_simple_by_example_put(json_request_body)
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -157,7 +158,7 @@ function simple_queries_api:api_simple_first_example_put(json_request_body)
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -190,7 +191,7 @@ function simple_queries_api:api_simple_fulltext_put(json_request_body)
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -223,7 +224,7 @@ function simple_queries_api:api_simple_lookup_by_keys_put(json_request_body)
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -256,7 +257,7 @@ function simple_queries_api:api_simple_near_put(json_request_body)
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -289,7 +290,7 @@ function simple_queries_api:api_simple_range_put(json_request_body)
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -322,7 +323,7 @@ function simple_queries_api:api_simple_remove_by_example_put(json_request_body)
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -355,7 +356,7 @@ function simple_queries_api:api_simple_remove_by_keys_put(json_request_body)
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -388,7 +389,7 @@ function simple_queries_api:api_simple_replace_by_example_put(json_request_body)
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -421,7 +422,7 @@ function simple_queries_api:api_simple_update_by_example_put(json_request_body)
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -454,7 +455,7 @@ function simple_queries_api:api_simple_within_put(json_request_body)
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -487,7 +488,7 @@ function simple_queries_api:api_simple_within_rectangle_put(json_request_body)
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end

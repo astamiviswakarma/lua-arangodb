@@ -24,7 +24,7 @@ local swagger_mt = {
 	__index = aql_api;
 }
 
-local function new_aql_api(schemes, host, port, basePath)
+local function new_aql_api(schemes, host, port, basePath, timeout)
 	local schemes_map = {}
 	for _,v in ipairs(schemes) do
 		schemes_map[v] = v
@@ -33,6 +33,7 @@ local function new_aql_api(schemes, host, port, basePath)
 	return setmetatable({
 		host = host;
 		port = port or 80;
+		timeout = timeout or 3;
 		basePath = basePath or "";
 		schemes = schemes_map;
 		default_scheme = default_scheme;
@@ -56,7 +57,7 @@ function aql_api:api_aqlfunction_get(namespace)
 	req.headers:upsert(":method", "GET")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -87,7 +88,7 @@ function aql_api:api_aqlfunction_name_delete(name, group)
 	req.headers:upsert(":method", "DELETE")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -120,7 +121,7 @@ function aql_api:api_aqlfunction_post(json_request_body)
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -153,7 +154,7 @@ function aql_api:api_explain_post(json_request_body)
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -184,7 +185,7 @@ function aql_api:api_query_cache_delete()
 	req.headers:upsert(":method", "DELETE")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -215,7 +216,7 @@ function aql_api:api_query_cache_properties_get()
 	req.headers:upsert(":method", "GET")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -248,7 +249,7 @@ function aql_api:api_query_cache_properties_put(json_request_body)
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -279,7 +280,7 @@ function aql_api:api_query_current_get()
 	req.headers:upsert(":method", "GET")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -312,7 +313,7 @@ function aql_api:api_query_post(json_request_body)
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -343,7 +344,7 @@ function aql_api:api_query_properties_get()
 	req.headers:upsert(":method", "GET")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -376,7 +377,7 @@ function aql_api:api_query_properties_put(json_request_body)
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -407,7 +408,7 @@ function aql_api:api_query_query_id_delete(query_id)
 	req.headers:upsert(":method", "DELETE")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -438,7 +439,7 @@ function aql_api:api_query_slow_delete()
 	req.headers:upsert(":method", "DELETE")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -469,7 +470,7 @@ function aql_api:api_query_slow_get()
 	req.headers:upsert(":method", "GET")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end

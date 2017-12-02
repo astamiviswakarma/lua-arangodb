@@ -24,7 +24,7 @@ local swagger_mt = {
 	__index = documents_api;
 }
 
-local function new_documents_api(schemes, host, port, basePath)
+local function new_documents_api(schemes, host, port, basePath, timeout)
 	local schemes_map = {}
 	for _,v in ipairs(schemes) do
 		schemes_map[v] = v
@@ -33,6 +33,7 @@ local function new_documents_api(schemes, host, port, basePath)
 	return setmetatable({
 		host = host;
 		port = port or 80;
+		timeout = timeout or 3;
 		basePath = basePath or "";
 		schemes = schemes_map;
 		default_scheme = default_scheme;
@@ -58,7 +59,7 @@ function documents_api:api_document_collection_delete(json_request_body, collect
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -91,7 +92,7 @@ function documents_api:api_document_collection_patch(json_request_body, collecti
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -124,7 +125,7 @@ function documents_api:api_document_collection_post(collection, json_request_bod
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -157,7 +158,7 @@ function documents_api:api_document_collection_put(json_request_body, collection
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -189,7 +190,7 @@ function documents_api:api_document_document_handle_delete(document_handle, wait
 	req.headers:upsert("If-Match", if_match)
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -222,7 +223,7 @@ function documents_api:api_document_document_handle_get(document_handle, if_none
 	req.headers:upsert("If-Match", if_match)
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -255,7 +256,7 @@ function documents_api:api_document_document_handle_head(document_handle, if_non
 	req.headers:upsert("If-Match", if_match)
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -289,7 +290,7 @@ function documents_api:api_document_document_handle_patch(json_request_body, doc
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -323,7 +324,7 @@ function documents_api:api_document_document_handle_put(json_request_body, docum
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -356,7 +357,7 @@ function documents_api:api_simple_all_keys_put(json_request_body)
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end

@@ -24,7 +24,7 @@ local swagger_mt = {
 	__index = database_api;
 }
 
-local function new_database_api(schemes, host, port, basePath)
+local function new_database_api(schemes, host, port, basePath, timeout)
 	local schemes_map = {}
 	for _,v in ipairs(schemes) do
 		schemes_map[v] = v
@@ -33,6 +33,7 @@ local function new_database_api(schemes, host, port, basePath)
 	return setmetatable({
 		host = host;
 		port = port or 80;
+		timeout = timeout or 3;
 		basePath = basePath or "";
 		schemes = schemes_map;
 		default_scheme = default_scheme;
@@ -56,7 +57,7 @@ function database_api:api_database_current_get()
 	req.headers:upsert(":method", "GET")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -87,7 +88,7 @@ function database_api:api_database_database_name_delete(database_name)
 	req.headers:upsert(":method", "DELETE")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -118,7 +119,7 @@ function database_api:api_database_get()
 	req.headers:upsert(":method", "GET")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -151,7 +152,7 @@ function database_api:api_database_post(json_request_body)
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -182,7 +183,7 @@ function database_api:api_database_user_get()
 	req.headers:upsert(":method", "GET")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end

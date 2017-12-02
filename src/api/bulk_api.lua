@@ -24,7 +24,7 @@ local swagger_mt = {
 	__index = bulk_api;
 }
 
-local function new_bulk_api(schemes, host, port, basePath)
+local function new_bulk_api(schemes, host, port, basePath, timeout)
 	local schemes_map = {}
 	for _,v in ipairs(schemes) do
 		schemes_map[v] = v
@@ -33,6 +33,7 @@ local function new_bulk_api(schemes, host, port, basePath)
 	return setmetatable({
 		host = host;
 		port = port or 80;
+		timeout = timeout or 3;
 		basePath = basePath or "";
 		schemes = schemes_map;
 		default_scheme = default_scheme;
@@ -58,7 +59,7 @@ function bulk_api:api_batch_post(json_request_body)
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -91,7 +92,7 @@ function bulk_api:api_export_post(json_request_body, collection)
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -124,7 +125,7 @@ function bulk_api:api_importdocument_post(json_request_body, collection, from_pr
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -157,7 +158,7 @@ function bulk_api:api_importjson_post(json_request_body, type, collection, from_
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end

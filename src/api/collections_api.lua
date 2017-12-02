@@ -24,7 +24,7 @@ local swagger_mt = {
 	__index = collections_api;
 }
 
-local function new_collections_api(schemes, host, port, basePath)
+local function new_collections_api(schemes, host, port, basePath, timeout)
 	local schemes_map = {}
 	for _,v in ipairs(schemes) do
 		schemes_map[v] = v
@@ -33,6 +33,7 @@ local function new_collections_api(schemes, host, port, basePath)
 	return setmetatable({
 		host = host;
 		port = port or 80;
+		timeout = timeout or 3;
 		basePath = basePath or "";
 		schemes = schemes_map;
 		default_scheme = default_scheme;
@@ -56,7 +57,7 @@ function collections_api:api_collection_collection_name_checksum_get(collection_
 	req.headers:upsert(":method", "GET")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -87,7 +88,7 @@ function collections_api:api_collection_collection_name_count_get(collection_nam
 	req.headers:upsert(":method", "GET")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -118,7 +119,7 @@ function collections_api:api_collection_collection_name_delete(collection_name, 
 	req.headers:upsert(":method", "DELETE")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -154,7 +155,7 @@ function collections_api:api_collection_collection_name_figures_get(collection_n
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -196,7 +197,7 @@ function collections_api:api_collection_collection_name_get(collection_name)
 	req.headers:upsert(":method", "GET")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -227,7 +228,7 @@ function collections_api:api_collection_collection_name_load_indexes_into_memory
 	req.headers:upsert(":method", "PUT")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -258,7 +259,7 @@ function collections_api:api_collection_collection_name_load_put(collection_name
 	req.headers:upsert(":method", "PUT")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -289,7 +290,7 @@ function collections_api:api_collection_collection_name_properties_get(collectio
 	req.headers:upsert(":method", "GET")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -320,7 +321,7 @@ function collections_api:api_collection_collection_name_properties_put(collectio
 	req.headers:upsert(":method", "PUT")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -351,7 +352,7 @@ function collections_api:api_collection_collection_name_rename_put(collection_na
 	req.headers:upsert(":method", "PUT")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -382,7 +383,7 @@ function collections_api:api_collection_collection_name_revision_get(collection_
 	req.headers:upsert(":method", "GET")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -413,7 +414,7 @@ function collections_api:api_collection_collection_name_rotate_put(collection_na
 	req.headers:upsert(":method", "PUT")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -444,7 +445,7 @@ function collections_api:api_collection_collection_name_truncate_put(collection_
 	req.headers:upsert(":method", "PUT")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -475,7 +476,7 @@ function collections_api:api_collection_collection_name_unload_put(collection_na
 	req.headers:upsert(":method", "PUT")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -506,7 +507,7 @@ function collections_api:api_collection_get(exclude_system)
 	req.headers:upsert(":method", "GET")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -539,7 +540,7 @@ function collections_api:api_collection_post(json_request_body, wait_for_sync_re
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end

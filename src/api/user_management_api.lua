@@ -24,7 +24,7 @@ local swagger_mt = {
 	__index = user_management_api;
 }
 
-local function new_user_management_api(schemes, host, port, basePath)
+local function new_user_management_api(schemes, host, port, basePath, timeout)
 	local schemes_map = {}
 	for _,v in ipairs(schemes) do
 		schemes_map[v] = v
@@ -33,6 +33,7 @@ local function new_user_management_api(schemes, host, port, basePath)
 	return setmetatable({
 		host = host;
 		port = port or 80;
+		timeout = timeout or 3;
 		basePath = basePath or "";
 		schemes = schemes_map;
 		default_scheme = default_scheme;
@@ -56,7 +57,7 @@ function user_management_api:api_user_get()
 	req.headers:upsert(":method", "GET")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -89,7 +90,7 @@ function user_management_api:api_user_post(json_request_body)
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -120,7 +121,7 @@ function user_management_api:api_user_user_database_database_collection_get(user
 	req.headers:upsert(":method", "GET")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -151,7 +152,7 @@ function user_management_api:api_user_user_database_database_get(user, database)
 	req.headers:upsert(":method", "GET")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -182,7 +183,7 @@ function user_management_api:api_user_user_database_dbname_collection_delete(use
 	req.headers:upsert(":method", "DELETE")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -215,7 +216,7 @@ function user_management_api:api_user_user_database_dbname_collection_put(json_r
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -246,7 +247,7 @@ function user_management_api:api_user_user_database_dbname_delete(user, dbname)
 	req.headers:upsert(":method", "DELETE")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -279,7 +280,7 @@ function user_management_api:api_user_user_database_dbname_put(json_request_body
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -310,7 +311,7 @@ function user_management_api:api_user_user_database_get(user, full)
 	req.headers:upsert(":method", "GET")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -341,7 +342,7 @@ function user_management_api:api_user_user_delete(user)
 	req.headers:upsert(":method", "DELETE")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -372,7 +373,7 @@ function user_management_api:api_user_user_get(user)
 	req.headers:upsert(":method", "GET")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -405,7 +406,7 @@ function user_management_api:api_user_user_patch(user, json_request_body)
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -438,7 +439,7 @@ function user_management_api:api_user_user_put(user, json_request_body)
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end

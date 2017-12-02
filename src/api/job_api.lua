@@ -24,7 +24,7 @@ local swagger_mt = {
 	__index = job_api;
 }
 
-local function new_job_api(schemes, host, port, basePath)
+local function new_job_api(schemes, host, port, basePath, timeout)
 	local schemes_map = {}
 	for _,v in ipairs(schemes) do
 		schemes_map[v] = v
@@ -33,6 +33,7 @@ local function new_job_api(schemes, host, port, basePath)
 	return setmetatable({
 		host = host;
 		port = port or 80;
+		timeout = timeout or 3;
 		basePath = basePath or "";
 		schemes = schemes_map;
 		default_scheme = default_scheme;
@@ -56,7 +57,7 @@ function job_api:api_job_job_id_cancel_put(job_id)
 	req.headers:upsert(":method", "PUT")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -87,7 +88,7 @@ function job_api:api_job_job_id_get(job_id)
 	req.headers:upsert(":method", "GET")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -118,7 +119,7 @@ function job_api:api_job_job_id_put(job_id)
 	req.headers:upsert(":method", "PUT")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -149,7 +150,7 @@ function job_api:api_job_type_delete(type)
 	req.headers:upsert(":method", "DELETE")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -180,7 +181,7 @@ function job_api:api_job_type_get(type)
 	req.headers:upsert(":method", "GET")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end

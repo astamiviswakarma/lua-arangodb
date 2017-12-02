@@ -24,7 +24,7 @@ local swagger_mt = {
 	__index = foxx_api;
 }
 
-local function new_foxx_api(schemes, host, port, basePath)
+local function new_foxx_api(schemes, host, port, basePath, timeout)
 	local schemes_map = {}
 	for _,v in ipairs(schemes) do
 		schemes_map[v] = v
@@ -33,6 +33,7 @@ local function new_foxx_api(schemes, host, port, basePath)
 	return setmetatable({
 		host = host;
 		port = port or 80;
+		timeout = timeout or 3;
 		basePath = basePath or "";
 		schemes = schemes_map;
 		default_scheme = default_scheme;
@@ -56,7 +57,7 @@ function foxx_api:api_foxx_commit_post(replace)
 	req.headers:upsert(":method", "POST")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -87,7 +88,7 @@ function foxx_api:api_foxx_configuration_get(mount)
 	req.headers:upsert(":method", "GET")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -120,7 +121,7 @@ function foxx_api:api_foxx_configuration_patch(json_request_body, mount)
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -153,7 +154,7 @@ function foxx_api:api_foxx_configuration_put(json_request_body, mount)
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -184,7 +185,7 @@ function foxx_api:api_foxx_dependencies_get(mount)
 	req.headers:upsert(":method", "GET")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -217,7 +218,7 @@ function foxx_api:api_foxx_dependencies_patch(json_request_body, mount)
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -250,7 +251,7 @@ function foxx_api:api_foxx_dependencies_put(json_request_body, mount)
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -281,7 +282,7 @@ function foxx_api:api_foxx_development_delete(mount)
 	req.headers:upsert(":method", "DELETE")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -312,7 +313,7 @@ function foxx_api:api_foxx_development_post(mount)
 	req.headers:upsert(":method", "POST")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -343,7 +344,7 @@ function foxx_api:api_foxx_download_post(mount)
 	req.headers:upsert(":method", "POST")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -374,7 +375,7 @@ function foxx_api:api_foxx_get()
 	req.headers:upsert(":method", "GET")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -405,7 +406,7 @@ function foxx_api:api_foxx_post(mount, development, setup, legacy)
 	req.headers:upsert(":method", "POST")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -436,7 +437,7 @@ function foxx_api:api_foxx_readme_get(mount)
 	req.headers:upsert(":method", "GET")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -467,7 +468,7 @@ function foxx_api:api_foxx_scripts_get(mount)
 	req.headers:upsert(":method", "GET")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -500,7 +501,7 @@ function foxx_api:api_foxx_scripts_name_post(name, json_request_body)
 
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -531,7 +532,7 @@ function foxx_api:api_foxx_service_delete(mount, teardown)
 	req.headers:upsert(":method", "DELETE")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -562,7 +563,7 @@ function foxx_api:api_foxx_service_get(mount)
 	req.headers:upsert(":method", "GET")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -593,7 +594,7 @@ function foxx_api:api_foxx_service_patch(mount, teardown, setup, legacy)
 	req.headers:upsert(":method", "PATCH")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -624,7 +625,7 @@ function foxx_api:api_foxx_service_put(mount, teardown, setup, legacy)
 	req.headers:upsert(":method", "PUT")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -655,7 +656,7 @@ function foxx_api:api_foxx_swagger_get(mount)
 	req.headers:upsert(":method", "GET")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
@@ -686,7 +687,7 @@ function foxx_api:api_foxx_tests_post(mount, reporter, idiomatic)
 	req.headers:upsert(":method", "POST")
 
 	-- make the HTTP call
-	local headers, stream, errno = req:go()
+	local headers, stream, errno = req:go(self.timeout)
 	if not headers then
 		return nil, stream, errno
 	end
