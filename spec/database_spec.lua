@@ -1,0 +1,7 @@
+describe("Testing database apis to arangodb", function()
+    local inspect = require("inspect")
+    it("should able to create database", function()
+        assert.are_not.equals(_G.auth_token, nil)
+        print(inspect(_G.auth_token))
+    end)
+end)
