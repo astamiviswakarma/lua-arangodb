@@ -18,7 +18,6 @@ dependencies = {
     "busted = 2.0.rc12-1",
     "dkjson = 2.5-2",
     "http = 0.2-0",
-    "inspect = 3.1.0-1",
     "basexx = 0.4.0-1",
     "luafilesystem = 1.6.3-1",
     "luaposix = 33.3.1-1",
