@@ -558,7 +558,7 @@ function collections_api:api_collection_get(exclude_system)
 		return nil, stream, errno
 	end
 	local http_status = headers:get(":status")
-	if http_status:sub(1,1) == "2" then
+	if http_status:sub(1,1) == "5" then
 		return nil, headers
 	else
 		local body, err, errno2 = stream:get_body_as_string()
