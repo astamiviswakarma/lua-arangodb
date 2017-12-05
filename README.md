@@ -10,6 +10,6 @@ docker run --rm -v ${PWD}:/local swaggerapi/swagger-codegen-cli generate \
 for build
 ----------------
 ~~~
-sudo apt install libssl-dev
+sudo apt install libssl-dev m4
 luarocks make --local
 ~~~

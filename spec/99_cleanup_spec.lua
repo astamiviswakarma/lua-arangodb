@@ -10,11 +10,12 @@ describe("Cleanup arangodb", function()
         local database_api = new_database_api.new(_G.arango.scheme, _G.arango.host, _G.arango.port)
         database_api.access_token = _G.auth_token;
         local err, http_status, body = database_api:api_database_database_name_delete("testdb")
+
+        local json = dkjson.decode(body);
+        -- print(pretty.write(json));
+
         assert.are.same(http_status, '200');
         assert.are.same(err, nil);
-
-        -- local json = dkjson.decode(body);
-        -- print(pretty.write(json));
     end)
 
 end)
